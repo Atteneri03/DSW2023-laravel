@@ -141,4 +141,19 @@ class PostController extends Controller
     return view('posts.read', compact('post'));
     }
 
+    public function vote(Post $post) {
+        // Comprobamos que no haya votado ya.
+        $vote = $post->votedUsers()->find(Auth::id());
+        // Si no ha votado, lo añadimos.
+        if (!$vote) {
+          $post->votedUsers()->attach(Auth::id());
+        } else {
+            // Si ha votado, lo eliminamos.
+            $post->votedUsers()->detach(Auth::id());
+          }
+
+        return redirect()->back();
+      }
+
+
 }

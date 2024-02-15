@@ -35,5 +35,5 @@ require __DIR__.'/auth.php';
 Route::resource('posts', 'App\Http\Controllers\PostController')->middleware('auth');
 Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update');
 Route::get('/posts/{id}/read', [PostController::class, 'read'])->name('posts.read');
-
+Route::post('/posts/{post}/vote', [PostController::class, 'vote'])->name('posts.vote')->middleware('auth');
 

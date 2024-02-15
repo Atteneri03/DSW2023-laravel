@@ -13,7 +13,12 @@
         @foreach ($firstPosts as $post)
         <div class="rounded-3xl shadow-lg bg-white m-3 p-3 border-gray-500">
           <div class="grid grid-flow-col justify-items-stretch">
-            <span class="text-4xl mt-3 col-auto">{{$post->title}}</span>
+            <span class="text-4xl mt-3 col-auto">{{$post->title}}
+                @if ($post->votedUsers)
+                <span class="text-sm font-mono bg-slate-200 p-2 rounded-xl">
+                  {{ $post->votedUsers->count() }}</span>
+                @endif
+            </span>
             <div class="text-right pt-3">
               <span class="text-sm bg-slate-200 p-2 rounded-2xl mt-5">
                 {{ \Carbon\Carbon::create($post->published_at)->format('d/m/Y')}}
@@ -48,7 +53,12 @@
             {{ \Carbon\Carbon::create($post->published_at)->format('d/m/Y')}}</span>
           <a href="{{ Route('posts.read', $post->id)}}"
             class="text-xl mt-3 col-auto mx-4 hover:text-blue-500">{{$post->title}}</a>
-          <span class="mt-4 text-slate-600 col-auto">{{$post->user->name}}</span>
+          <span class="mt-4 text-slate-600 col-auto">{{$post->user->name}}
+            @if ($post->votedUsers)
+            <span class="text-sm font-mono bg-slate-200 p-2 rounded-xl">
+              {{ $post->votedUsers->count() }}</span>
+            @endif
+</span>
         </li>
         @endforeach
       </ul>
