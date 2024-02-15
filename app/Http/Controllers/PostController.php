@@ -103,20 +103,20 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-    // Validamos solo los campos necesarios para la actualización del post
-    $validatedData = $request->validate([
-        'title' => 'required|unique:posts|min:3|max:255',
-        'summary' => 'max:2000',
-        'body' => 'required',
-        'published_at' => 'required|date',
-    ]);
+        // Validamos solo los campos necesarios para la actualización del post
+        $validatedData = $request->validate([
+            'title' => 'required|unique:posts|min:3|max:255',
+            'summary' => 'max:2000',
+            'body' => 'required',
+            'published_at' => 'required|date',
+        ]);
 
-    // Actualizamos el post con los datos validados
-    $post->update($validatedData);
+        // Actualizamos el post con los datos validados
+        $post->update($validatedData);
 
-    // Redireccionamos al usuario a la página del post actualizado
-    return redirect()->route('posts.index', $post)->with('success', 'Post actualizado correctamente');
-    // return redirect()->route('posts.index')->with('success','llega hatsa update');
+        // Redireccionamos al usuario a la página del post actualizado
+        return redirect()->route('posts.index', $post)->with('success', 'Post actualizado correctamente');
+        // return redirect()->route('posts.index')->with('success','llega hatsa update');
     }
 
     /**
@@ -137,8 +137,8 @@ class PostController extends Controller
 
     public function read(int $id)
     {
-    $post = Post::find($id);
-    return view('posts.read', compact('post'));
+        $post = Post::find($id);
+        return view('posts.read', compact('post'));
     }
 
     public function vote(Post $post) {
@@ -146,14 +146,14 @@ class PostController extends Controller
         $vote = $post->votedUsers()->find(Auth::id());
         // Si no ha votado, lo añadimos.
         if (!$vote) {
-          $post->votedUsers()->attach(Auth::id());
+            $post->votedUsers()->attach(Auth::id());
         } else {
             // Si ha votado, lo eliminamos.
             $post->votedUsers()->detach(Auth::id());
-          }
+        }
 
         return redirect()->back();
-      }
+    }
 
 
 }
